@@ -1,0 +1,56 @@
+<h2>Búsqueda de restaurantes</h2>
+
+{% if busqueda_realizada %}
+  <table class="striped">
+    <thead>
+      <tr>
+          <th>Nombre</th>
+          <th>Dirección</th>
+          <th>Puntuaciones</th>
+      </tr>
+    </thead>
+    <tbody>
+  {% for restaurante in restaurantes %}
+      <tr>
+        <td>{{restaurante["name"]}}</td>
+        <td>{{restaurante["address"].street}}</td>
+        <td>
+        {% for grade in restaurante["grades"] %}
+          {{grade.grade}}
+        {% endfor %}
+        </td>
+      </tr>
+  {% endfor %}
+    </tbody>
+  </table>
+
+
+
+{% else %}
+
+  <form class="col s12" action="/restaurantes" method="post">
+    <div class="input-field col s12">
+      <select name="cocina">
+        <option value="" disabled selected>Elige un tipo de cocina</option>
+        {% for tipo_cocina in tipos_cocina %}
+          <option value={{tipo_cocina}}>{{tipo_cocina}}</option>
+        {% endfor %}
+      </select>
+      <label>Tipo de cocina</label>
+    </div>
+
+    <div class="input-field col s12">
+      <select name="barrio">
+        <option value="" disabled selected>Elige un barrio</option>
+        {% for barrio in barrios %}
+          <option value={{barrio}}>{{barrio}}</option>
+        {% endfor %}
+      </select>
+      <label>Barrio</label>
+    </div>
+
+    <button class="teal darken-3 btn waves-effect waves-light" type="submit" name="action">Buscar
+       <i class="material-icons left">search</i>
+     </button>
+  </form>
+{% endif %}
